@@ -58,8 +58,10 @@ class QuizResource(Resource): #creating a route using flask restful api ,rather 
             db.session.add(new_quiz)
             db.session.commit()
             quiz_update_result=quiz_update.delay(new_quiz.id)  # Asynchronous task to update quiz statistics
+            
             return {'message': 'Quiz created successfully', 'quiz_id': new_quiz.id}, 201
         except Exception as e:
+            print(f"Error: {e}")
             return {'message': str(e)}, 400
     @auth_required('token')
     @roles_required('admin')

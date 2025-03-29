@@ -56,6 +56,13 @@ def setup_periodic_tasks(sender, **kwargs):
         crontab(minute = '*/2'),
         monthly_report.s(),
     )
+import redis
+
+try:
+    client = redis.StrictRedis(host='localhost', port=6379, db=0)
+    print(client.ping())
+except Exception as e:
+    print(f"Redis connection failed: {e}")
 
 if __name__ == "__main__":
     app.run(debug=True)
